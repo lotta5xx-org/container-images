@@ -1,0 +1,30 @@
+set dotenv-load
+set positional-arguments
+
+import 'terraform.just'
+
+default:
+  just --list
+
+# AWS EKS update kubeconfig
+eks-update-kubeconfig *args='':
+  cd {{ invocation_directory() }}
+  aws eks update-kubeconfig --region ${AWS_REGION} --name ${EKS_CLUSTER_NAME} --role-arn ${EKS_ROLE_NAME} {{ args }}
+
+# AWS EC2 SSM session
+ssm *args='':
+  aws ssm start-session --target {{ args }}
+
+# AWS SSO init profile
+sso-init *args='':
+    cd {{ invocation_directory() }}
+    aws configure set profile.default.sso_start_url "${AWS_SSO_START_URL}"
+    aws configure set profile.default.sso_region "${AWS_SSO_REGION}"
+    aws configure set profile.default.sso_account_id "${AWS_SSO_ACCOUNT_ID}"
+    aws configure set profile.default.sso_role_name "${AWS_SSO_ROLE_NAME}"
+    aws configure set profile.default.region "${AWS_REGION}"
+    aws configure set profile.default.output json
+
+# AWS SSO login
+sso-login *args='':
+    aws sso login
