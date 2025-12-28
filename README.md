@@ -5,6 +5,7 @@
 Use `env.example` to configure your `.env` file.
 
 ```commandline
+mkdir $(pwd)/.local
 touch $(pwd)/.local/.bash_history
 
 docker run --rm -it \
