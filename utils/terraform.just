@@ -11,7 +11,8 @@ init *args='': fmt
 # Terraform plan
 plan *args='': fmt
     cd {{ invocation_directory() }} && \
-    terraform plan -out ./tf.plan $@
+    terraform plan -out ./tf.plan $@ && \
+    tf-summarize ./tf.plan
 
 # Terraform apply
 apply *args='': fmt
