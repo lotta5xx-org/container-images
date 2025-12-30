@@ -81,5 +81,10 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | sh \
 RUN curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash \
  && mv kustomize /usr/local/bin/kustomize
 
+# TF summarize
+RUN curl -sSOL https://github.com/dineshba/tf-summarize/releases/download/v0.3.14/tf-summarize_0.3.14_linux_arm64.deb \
+ && dpkg -i tf-summarize_0.3.14_linux_arm64.deb \
+ && rm -rf tf-summarize_0.3.14_linux_arm64.deb
+
 COPY .terraformrc /root/.terraformrc
 COPY justfile terraform.just /
